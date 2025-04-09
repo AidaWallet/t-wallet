@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "target": "esnext",                       // Современный JavaScript
+    "module": "esnext",                       // Модульная система ES
+    "jsx": "react-jsx",                       // Используем JSX синтаксис для React
+    "moduleResolution": "node",               // Как разрешать модули
+    "resolveJsonModule": true,                // Разрешение импортировать .json файлы
+    "esModuleInterop": true,                  // Для совместимости с CommonJS
+    "strict": true,                           // Включение строгого режима
+    "skipLibCheck": true,                     // Пропустить проверку типов в библиотеках
+    "forceConsistentCasingInFileNames": true  // Принудительное соблюдение чувствительности к регистру в путях
+  },
+  "include": [
+    "src/**/*.ts",                            // Включаем все TypeScript файлы
+    "src/**/*.tsx"                            // Включаем все TypeScript JSX файлы
+  ],
+  "exclude": [
+    "node_modules"                            // Исключаем node_modules
+  ]
+}
+
