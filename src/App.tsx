@@ -1,39 +1,89 @@
-import React, { useState } from "react";
+import React from "react";
 import MainPage from "./sections/MainPage";
-import SearchPage from "./sections/SearchPage"; // Добавляем SearchPage
-import SwiftPage from "./sections/SwiftPage"; // Оставляем SwiftPage
-import TokenPage from "./sections/TokenPage"; // Пока как "rewards"
-import BonusPage from "./sections/BonusPage"; // Пока как "settings"
+import SearchPage from "./sections/SearchPage";
+import SwiftPage from "./sections/SwiftPage";
+import TokenPage from "./sections/TokenPage";
+import BonusPage from "./sections/BonusPage";
+import AnalysisPage from "./sections/AnalysisPage";
 import TabBar from "./components/TabBar";
 import { BonusProvider } from "./contexts/BonusContext";
+import LeaderPage from "./sections/LeaderPage";
+import SettingsPage from "./sections/SettingsPage";
+import { PAGES } from "./pages";
+import { useNavigation } from "./hooks/useNavigation";
 
 const App: React.FC = () => {
-  const [selectedPage, setSelectedPage] = useState<"home" | "search" | "rewards" | "settings">("home");
+  const { page, token, goTo, setToken } = useNavigation();
+
+  const renderPage = () => {
+    switch (page) {
+      case PAGES.HOME:
+        return (
+          <MainPage
+            onSelectSwiftPage={() => goTo(PAGES.SWIFT)}
+            onSelectBonusPage={() => goTo(PAGES.BONUS)}
+          />
+        );
+
+      case PAGES.SWIFT:
+        return (
+          <SwiftPage
+            onSelectToken={(token) => {
+              setToken(token);
+              goTo(PAGES.TOKEN);
+            }}
+            onSelectAnalysis={() => goTo(PAGES.ANALYSIS)}
+            onBack={() => goTo(PAGES.HOME)}
+          />
+        );
+
+      case PAGES.TOKEN:
+        return (
+          token && <TokenPage token={token} onBack={() => goTo(PAGES.SWIFT)} />
+        );
+
+      case PAGES.ANALYSIS:
+        return <AnalysisPage onBack={() => goTo(PAGES.SWIFT)} />;
+
+      case PAGES.SEARCH:
+        return <SearchPage onBack={() => goTo(PAGES.HOME)} />;
+
+      case PAGES.REWARDS:
+        return <LeaderPage onBack={() => goTo(PAGES.HOME)} />;
+
+      case PAGES.SETTINGS:
+        return <SettingsPage onBack={() => goTo(PAGES.HOME)} />;
+
+      case PAGES.BONUS:
+        return <BonusPage onBack={() => goTo(PAGES.HOME)} />;
+
+      default:
+        return null;
+    }
+  };
+
+  const showTabBar = [
+    PAGES.HOME,
+    PAGES.SEARCH,
+    PAGES.REWARDS,
+    PAGES.SETTINGS,
+  ].includes(page);
 
   return (
     <div className="min-h-screen bg-[#F8F8FB] pb-[65px]">
       <BonusProvider>
-        {selectedPage === "home" && (
-          <MainPage
-            onSelectSwiftPage={() => setSelectedPage("swift")} // Переход на SwiftPage
-            onSelectBonusPage={() => setSelectedPage("settings")}
-          />
-        )}
-        {selectedPage === "swift" && <SwiftPage />} {/* Открытие SwiftPage */}
-        {selectedPage === "search" && <SearchPage />} {/* Открытие SearchPage */}
-        {selectedPage === "rewards" && <TokenPage />}
-        {selectedPage === "settings" && <BonusPage onBack={() => setSelectedPage("home")} />}
-
-        {/* Показываем TabBar только на этих страницах, исключая SwiftPage */}
-        {["home", "search", "rewards", "settings"].includes(selectedPage) && (
-          <TabBar activeTab={selectedPage} onSelect={setSelectedPage} />
-        )}
+        {renderPage()}
+        {showTabBar && <TabBar activeTab={page} onSelect={goTo} />}
       </BonusProvider>
     </div>
   );
 };
 
 export default App;
+
+
+
+
 
 
 

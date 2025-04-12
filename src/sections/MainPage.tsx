@@ -1,9 +1,10 @@
-import React, { useEffect } from "react";
+import React from "react";
 import BalanceActionBlock from "../containers/BalanceActionBlock";
 import TokenListContainer from "../containers/TokenListContainer";
 import TrendBadge from "../components/TrendBadge";
 import TripleActionButtons from "../components/TripleActionButtons";
 import BannerBlock from "../components/BannerBlock";
+import { useMiniAppUI } from "../hooks/useMiniAppUI";
 
 interface MainPageProps {
   onSelectSwiftPage?: () => void;
@@ -11,10 +12,11 @@ interface MainPageProps {
 }
 
 const MainPage: React.FC<MainPageProps> = ({ onSelectSwiftPage, onSelectBonusPage }) => {
-  useEffect(() => {
-    const tg = window.Telegram?.WebApp;
-    tg?.setHeaderColor?.("#212121");
-  }, []);
+  useMiniAppUI({
+    headerColor: "#212121",
+    bottomBarColor: "#ffffff",
+    backgroundColor: "#F8F8FB",
+  });
 
   const topActions = [
     { icon: "/icons/buy.svg", text: "Купить" },
@@ -43,7 +45,7 @@ const MainPage: React.FC<MainPageProps> = ({ onSelectSwiftPage, onSelectBonusPag
           {
             icon: "/icons/ton.svg",
             title: "Кошелек",
-            subtitle: "Toncoin", // ✅ добавлено — по желанию
+            subtitle: "Toncoin",
             rightContent: (
               <img
                 src="/icons/bounds.svg"
@@ -89,7 +91,7 @@ const MainPage: React.FC<MainPageProps> = ({ onSelectSwiftPage, onSelectBonusPag
           {
             icon: "/icons/income.svg",
             title: "Доход",
-            subtitle: "Статистика дохода", // ✅ можно убрать или оставить
+            subtitle: "Статистика дохода",
             rightContent: (
               <img
                 src="/icons/bounds.svg"
@@ -105,6 +107,7 @@ const MainPage: React.FC<MainPageProps> = ({ onSelectSwiftPage, onSelectBonusPag
 };
 
 export default MainPage;
+
 
 
 

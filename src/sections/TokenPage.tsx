@@ -2,29 +2,44 @@ import React from "react";
 import TokenChartContainer from "../containers/TokenChartContainer";
 import TokenListContainer from "../containers/TokenListContainer";
 import BannerBlock from "../components/BannerBlock";
-import TrendBadge from "../components/TrendBadge";
+import { useMiniAppUI } from "../hooks/useMiniAppUI";
 
-const TokenPage = () => {
+interface TokenData {
+  icon: string;
+  title: string;
+  subtitle: string;
+  value: string;
+}
 
-  const tg = window.Telegram?.WebApp;
-  tg?.setHeaderColor?.("#212121");
+interface TokenPageProps {
+  token: TokenData;
+  onBack?: () => void;
+}
+
+const TokenPage: React.FC<TokenPageProps> = ({ token, onBack }) => {
+  useMiniAppUI({
+    headerColor: "#212121",
+    bottomBarColor: "#ffffff",
+    backgroundColor: "#F8F8FB",
+    showBackButton: true,
+    onBack,
+  });
 
   return (
     <div className="flex flex-col pb-[20px] gap-[15px] w-full">
       <TokenChartContainer />
 
-      {/* Отрицательный отступ сверху */}
       <div className="-mt-[110px]">
         <TokenListContainer
           header="Ваш баланс"
           items={[
             {
-              icon: "/icons/ton.svg",
-              title: "TON",
-              subtitle: "20,980 $",
+              icon: token.icon,
+              title: token.title,
+              subtitle: token.subtitle,
               rightContent: (
                 <span className="text-[#212121] text-[15px] font-medium font-sfpro">
-                  67,087 $
+                  {token.value}
                 </span>
               ),
             },
@@ -62,7 +77,3 @@ const TokenPage = () => {
 };
 
 export default TokenPage;
-
-
-
-

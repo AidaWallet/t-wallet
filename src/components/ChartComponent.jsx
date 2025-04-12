@@ -119,6 +119,7 @@ const ChartComponent = forwardRef(({ setHoverPrice, setPriceChange, setPercentCh
     plugins: {
       legend: { display: false },
       tooltip: { enabled: false },
+      datalabels: { display: false }, // 🔧 фикс
     },
     scales: {
       x: { display: false },

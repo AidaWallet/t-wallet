@@ -1,10 +1,11 @@
 import React from "react";
-import Divider from "../components/Divider"; // путь уточни по своему проекту
+import Divider from "../components/Divider";
+import InfoRow from "../components/InfoRow";
 
 export interface TokenListItem {
   icon: string;
-  title: string;
-  subtitle?: string;
+  title: string | React.ReactNode;
+  subtitle?: string | React.ReactNode;
   rightContent?: React.ReactNode;
   onClick?: () => void;
 }
@@ -30,25 +31,13 @@ const TokenListContainer: React.FC<TokenListContainerProps> = ({
       <div className="flex flex-col">
         {items.map((item, index) => (
           <React.Fragment key={index}>
-            <div
-              className="flex items-center justify-between py-[10px] cursor-pointer"
+            <InfoRow
+              icon={item.icon}
+              title={item.title}
+              subtitle={item.subtitle}
+              rightContent={item.rightContent}
               onClick={item.onClick}
-            >
-              <div className="flex items-center gap-[15px]">
-                <img src={item.icon} alt={item.title} className="w-[45px] h-[45px]" />
-                <div className="flex flex-col">
-                  <span className="text-[16px] font-sfpro font-medium text-[#212121]">
-                    {item.title}
-                  </span>
-                  {item.subtitle && (
-                    <span className="text-[15px] font-sfpro text-[#6D6D6D]">{item.subtitle}</span>
-                  )}
-                </div>
-              </div>
-              {item.rightContent}
-            </div>
-
-            {/* 👇 Дивайдер между элементами, кроме последнего */}
+            />
             {index < items.length - 1 && (
               <div className="pl-[65px] mr-[-15px]">
                 <Divider />
@@ -62,7 +51,5 @@ const TokenListContainer: React.FC<TokenListContainerProps> = ({
 };
 
 export default TokenListContainer;
-
-
 
 

@@ -1,27 +1,18 @@
-import React, { useEffect } from "react";
+import React from "react";
 import BonusBalanceBlock from "../containers/BonusBalanceBlock";
 import BannerBlock from "../components/BannerBlock";
 import TokenListContainer from "../containers/TokenListContainer";
 import RewardButton from "../components/RewardButton";
+import { useMiniAppUI } from "../hooks/useMiniAppUI";
 
 const BonusPage: React.FC<{ onBack?: () => void }> = ({ onBack }) => {
-  useEffect(() => {
-    const tg = window.Telegram?.WebApp;
-    tg?.setHeaderColor?.("#212121");
-
-    tg?.BackButton.show();
-
-    if (onBack) {
-      tg?.onEvent("backButtonClicked", onBack);
-    }
-
-    return () => {
-      tg?.BackButton.hide();
-      if (onBack) {
-        tg?.offEvent("backButtonClicked", onBack);
-      }
-    };
-  }, [onBack]);
+  useMiniAppUI({
+    headerColor: "#212121",
+    bottomBarColor: "#ffffff",
+    backgroundColor: "#F8F8FB",
+    showBackButton: true,
+    onBack,
+  });
 
   return (
     <div className="flex flex-col gap-[15px] pb-[30px]">
@@ -84,5 +75,4 @@ const BonusPage: React.FC<{ onBack?: () => void }> = ({ onBack }) => {
 };
 
 export default BonusPage;
-
 

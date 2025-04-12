@@ -2,20 +2,46 @@ import React, { useState } from "react";
 import BalanceActionBlock from "../containers/BalanceActionBlock";
 import TokenListContainer from "../containers/TokenListContainer";
 import TrendBadge from "../components/TrendBadge";
+import { useMiniAppUI } from "../hooks/useMiniAppUI";
 
-const SwiftPage: React.FC<{ onSelectTokenPage?: () => void }> = ({ onSelectTokenPage }) => {
+// 🔹 Тип данных токена
+interface TokenData {
+  icon: string;
+  title: string;
+  subtitle: string;
+  value: string;
+}
+
+// 🔹 Пропсы для страницы SwiftPage
+interface SwiftPageProps {
+  onSelectToken?: (token: TokenData) => void;
+  onSelectAnalysis?: () => void;
+  onBack?: () => void;
+}
+
+const SwiftPage: React.FC<SwiftPageProps> = ({
+  onSelectToken,
+  onSelectAnalysis,
+  onBack,
+}) => {
   const [trendAllTime, setTrendAllTime] = useState(true);
-  
-      // Инициализация телеграм веб приложения
-  const tg = window.Telegram?.WebApp;
-  
-  // Измени цвет header
-  tg?.setHeaderColor('#212121');
+
+  useMiniAppUI({
+    headerColor: "#212121",
+    bottomBarColor: "#ffffff",
+    backgroundColor: "#F8F8FB",
+    showBackButton: true,
+    onBack,
+  });
 
   const actions = [
-    { icon: "/icons/operations.svg", text: "Операции", },
-    { icon: "/icons/add.svg", text: "Добавить токен", },
-    { icon: "/icons/receive.svg", text: "Пополнить", },
+    { icon: "/icons/operations.svg", text: "Операции" },
+    { icon: "/icons/add.svg", text: "Добавить токен" },
+    {
+      icon: "/icons/analysis.svg",
+      text: "Аналитика",
+      onClick: onSelectAnalysis,
+    },
   ];
 
   return (
@@ -27,37 +53,55 @@ const SwiftPage: React.FC<{ onSelectTokenPage?: () => void }> = ({ onSelectToken
         headerRightContent={<TrendBadge value={3.5} percent={1.1} />}
         items={[
           {
-            icon: "/icons/ton.svg",
-            title: "TON",
-            subtitle: "20,980 $",
+            icon: "/icons/btc.svg",
+            title: "Bitcoin",
+            subtitle: "0,00003 BTC $",
             rightContent: (
-              <span className="text-[#212121] text-[15px] font-medium font-sfpro">67,087 $</span>
+              <span className="text-[#212121] text-[15px] font-medium font-sfpro">
+                67,08 $
+              </span>
             ),
-            onClick: onSelectTokenPage,
+            onClick: () =>
+              onSelectToken?.({
+                icon: "/icons/btc.svg",
+                title: "Bitcoin",
+                subtitle: "0,00003 BTC $",
+                value: "67,08 $",
+              }),
           },
           {
             icon: "/icons/eth.svg",
-            title: "ETH",
-            subtitle: "1,200 $",
+            title: "Etherium",
+            subtitle: "0,08 ETH $",
             rightContent: (
-              <span className="text-[15px] font-medium font-sfpro text-[#212121]">5,100 $</span>
+              <span className="text-[15px] font-medium font-sfpro text-[#212121]">
+                123,06 $
+              </span>
             ),
+            onClick: () =>
+              onSelectToken?.({
+                icon: "/icons/eth.svg",
+                title: "Etherium",
+                subtitle: "0,08 ETH $",
+                value: "123,06 $",
+              }),
           },
           {
-            icon: "/icons/btc.svg",
-            title: "BTC",
-            subtitle: "0.25 BTC",
+            icon: "/icons/sol.svg",
+            title: "Solana",
+            subtitle: "0.12 SOL",
             rightContent: (
-              <span className="text-[15px] font-medium font-sfpro text-[#212121]">14,600 $</span>
+              <span className="text-[15px] font-medium font-sfpro text-[#212121]">
+                14,09 $
+              </span>
             ),
-          },
-          {
-            icon: "/icons/usdt.svg",
-            title: "USDT",
-            subtitle: "10,000 $",
-            rightContent: (
-              <span className="text-[15px] font-medium font-sfpro text-[#212121]">10,000 $</span>
-            ),
+            onClick: () =>
+              onSelectToken?.({
+                icon: "/icons/sol.svg",
+                title: "Solana",
+                subtitle: "0.12 SOL",
+                value: "14,09 $",
+              }),
           },
         ]}
       />
@@ -66,5 +110,9 @@ const SwiftPage: React.FC<{ onSelectTokenPage?: () => void }> = ({ onSelectToken
 };
 
 export default SwiftPage;
+
+
+
+
 
 
