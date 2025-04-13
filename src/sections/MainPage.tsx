@@ -5,6 +5,8 @@ import TrendBadge from "../components/TrendBadge";
 import TripleActionButtons from "../components/TripleActionButtons";
 import BannerBlock from "../components/BannerBlock";
 import { useMiniAppUI } from "../hooks/useMiniAppUI";
+import { useNavigation } from "../hooks/useNavigation";
+import { PAGES } from "../pages";
 
 interface MainPageProps {
   onSelectSwiftPage?: () => void;
@@ -18,8 +20,11 @@ const MainPage: React.FC<MainPageProps> = ({ onSelectSwiftPage, onSelectBonusPag
     backgroundColor: "#F8F8FB",
   });
 
+  const { goTo } = useNavigation();
+
   const topActions = [
-    { icon: "/icons/buy.svg", text: "Купить" },
+    {
+      icon: "/icons/buy.svg", text: "Купить" },
     { icon: "/icons/exchange.svg", text: "Обменять" },
     { icon: "/icons/add.svg", text: "Получить" },
   ];
@@ -107,6 +112,7 @@ const MainPage: React.FC<MainPageProps> = ({ onSelectSwiftPage, onSelectBonusPag
 };
 
 export default MainPage;
+
 
 
 

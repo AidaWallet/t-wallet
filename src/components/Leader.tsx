@@ -53,7 +53,7 @@ const Leader: React.FC<LeaderProps> = ({
       </span>
 
       {subtitle && (
-        <span className="text-[13px] font-sfpro text-[#50A8EB] bg-[#E2F2FC] px-[10px] py-[4px] rounded-full">
+        <span className="text-[13px] font-sfpro font-medium text-[#212121] bg-[#EFEFF4] px-[10px] py-[4px] rounded-full">
           {subtitle}
         </span>
       )}
