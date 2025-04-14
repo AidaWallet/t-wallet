@@ -70,7 +70,7 @@ const App: React.FC = () => {
   ].includes(page);
 
   return (
-    <div className="min-h-screen bg-[#F8F8FB] pb-[65px]">
+    <div className="min-h-screen pb-[65px]">
       <BonusProvider>
         {renderPage()}
         {showTabBar && <TabBar activeTab={page} onSelect={goTo} />}

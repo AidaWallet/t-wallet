@@ -7,7 +7,9 @@ interface BannerBlockProps {
   customContent?: React.ReactNode;
   backgroundColor: string;
   textColor: string;
-  onClick?: () => void; // 👈 новый проп
+  gradientFrom?: string;  // 🌈 начало градиента
+  gradientTo?: string;    // 🌈 конец градиента
+  onClick?: () => void;
 }
 
 const BannerBlock: React.FC<BannerBlockProps> = ({
@@ -17,33 +19,58 @@ const BannerBlock: React.FC<BannerBlockProps> = ({
   customContent,
   backgroundColor,
   textColor,
+  gradientFrom,
+  gradientTo,
   onClick,
 }) => {
+  const bgStyle =
+    gradientFrom && gradientTo
+      ? { background: `linear-gradient(to right, ${gradientFrom}, ${gradientTo})` }
+      : { backgroundColor };
+
   return (
     <div
       onClick={onClick}
-      className={`rounded-[20px] px-[20px] py-[15px] flex justify-between items-center mx-[15px] transition-all active:scale-[0.97] cursor-pointer`}
-      style={{ backgroundColor }}
+      className="relative rounded-[20px] px-[20px] py-[15px] mx-[15px] overflow-hidden transition-all active:scale-[0.97] cursor-pointer"
+      style={bgStyle}
     >
-      <div className="flex flex-col">
-        <span className="text-[16px] font-medium font-sfpro" style={{ color: textColor }}>
+      {/* Текстовый блок с отступом под картинку */}
+      <div className="flex flex-col justify-center z-10 relative pr-[100px]">
+        <span
+          className="text-[16px] font-medium font-sfpro mb-[10px]"
+          style={{ color: textColor }}
+        >
           {title}
         </span>
-        <span className="text-[14px] font-regular font-sfpro mt-[4px]" style={{ color: textColor }}>
+        <span
+          className="text-[13px] font-medium font-sfpro px-[10px] py-[3px] rounded-[40px] inline-block w-fit active:scale-[0.96] transition-all"
+          style={{
+            backgroundColor: textColor,
+            color: (gradientFrom || gradientTo) ? "#212121" : backgroundColor,
+          }}
+        >
           {subtitle}
         </span>
       </div>
 
-      <div className="flex-shrink-0">
-        {customContent ? (
-          customContent
-        ) : image ? (
-          <img src={image} alt="banner" className="w-[80px] h-[80px] object-contain" />
-        ) : null}
-      </div>
+      {/* Картинка поверх края */}
+      {customContent ? (
+        <div className="absolute right-[10px] bottom-[0px] z-0">
+          {customContent}
+        </div>
+      ) : image ? (
+        <img
+          src={image}
+          alt="banner"
+          className="absolute right-[-15px] bottom-[-15px] w-[120px] h-[120px] z-0 object-contain"
+        />
+      ) : null}
     </div>
   );
 };
 
 export default BannerBlock;
+
+
+
 

@@ -1,21 +1,27 @@
 import React from "react";
+import { useScrollToTop } from "../hooks/useScrollToTop";
 import BonusBalanceBlock from "../containers/BonusBalanceBlock";
 import BannerBlock from "../components/BannerBlock";
 import TokenListContainer from "../containers/TokenListContainer";
 import RewardButton from "../components/RewardButton";
 import { useMiniAppUI } from "../hooks/useMiniAppUI";
+import { useTheme } from "../contexts/ThemeContext";
 
 const BonusPage: React.FC<{ onBack?: () => void }> = ({ onBack }) => {
+  const { theme } = useTheme();
+
   useMiniAppUI({
     headerColor: "#212121",
-    bottomBarColor: "#ffffff",
-    backgroundColor: "#F8F8FB",
+    bottomBarColor: theme.bg,
+    backgroundColor: theme.bg,
     showBackButton: true,
     onBack,
   });
 
+  useScrollToTop();
+
   return (
-    <div className="flex flex-col gap-[15px] pb-[30px]">
+    <div className="flex flex-col gap-[15px] pb-[30px]" style={{ backgroundColor: theme.bg }}>
       <BonusBalanceBlock />
 
       <BannerBlock
@@ -23,11 +29,13 @@ const BonusPage: React.FC<{ onBack?: () => void }> = ({ onBack }) => {
         subtitle="Перейти"
         image="/images/cup.png"
         backgroundColor="#E9DEBE"
-        textColor="#212121"
+        textColor={theme.text}
       />
 
       <TokenListContainer
         header="Дополнительные задачи"
+        backgroundColor={theme.container}
+        textColor={theme.text}
         items={[
           {
             icon: "/icons/bgram.svg",
@@ -75,4 +83,6 @@ const BonusPage: React.FC<{ onBack?: () => void }> = ({ onBack }) => {
 };
 
 export default BonusPage;
+
+
 

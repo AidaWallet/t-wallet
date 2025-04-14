@@ -1,4 +1,5 @@
 import React from "react";
+import { useTheme } from "../contexts/ThemeContext"; // добавлено
 
 interface InfoRowProps {
   icon: string | React.ReactNode;
@@ -30,6 +31,8 @@ const InfoRow: React.FC<InfoRowProps> = ({
   rightContent,
   onClick,
 }) => {
+  const { theme } = useTheme(); // получаем цвета темы
+
   const isIconString = typeof icon === "string";
   const showInitial = isIconString ? icon.trim() === "" : false;
 
@@ -54,19 +57,26 @@ const InfoRow: React.FC<InfoRowProps> = ({
             style={{ backgroundImage: `url('${icon}')` }}
           />
         ) : (
-          // если icon — это ReactNode (например, <Skeleton />)
           <div className="w-[45px] h-[45px] flex items-center justify-center">
             {icon}
           </div>
         )}
 
         <div className="ml-[15px] flex flex-col items-start text-left">
-          <span className="text-[16px] text-[#212121] font-medium font-sfpro">
+          <span
+            className="text-[16px] font-medium font-sfpro"
+            style={{ color: theme.text }}
+          >
             {title}
           </span>
-          <span className="text-[15px] font-normal font-sfpro mt-[2px] text-[#AAAAAA]">
-            {subtitle}
-          </span>
+          {subtitle && (
+            <span
+              className="text-[15px] font-normal font-sfpro mt-[2px]"
+              style={{ color: theme.hint }}
+            >
+              {subtitle}
+            </span>
+          )}
         </div>
       </div>
       {rightContent && <div className="pr-[0px]">{rightContent}</div>}

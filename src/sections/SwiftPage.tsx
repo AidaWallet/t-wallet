@@ -3,8 +3,8 @@ import BalanceActionBlock from "../containers/BalanceActionBlock";
 import TokenListContainer from "../containers/TokenListContainer";
 import TrendBadge from "../components/TrendBadge";
 import { useMiniAppUI } from "../hooks/useMiniAppUI";
+import { useTheme } from "../contexts/ThemeContext"; // добавлено
 
-// 🔹 Тип данных токена
 interface TokenData {
   icon: string;
   title: string;
@@ -12,7 +12,6 @@ interface TokenData {
   value: string;
 }
 
-// 🔹 Пропсы для страницы SwiftPage
 interface SwiftPageProps {
   onSelectToken?: (token: TokenData) => void;
   onSelectAnalysis?: () => void;
@@ -25,18 +24,19 @@ const SwiftPage: React.FC<SwiftPageProps> = ({
   onBack,
 }) => {
   const [trendAllTime, setTrendAllTime] = useState(true);
+  const { theme } = useTheme(); // используем тему
 
   useMiniAppUI({
     headerColor: "#212121",
-    bottomBarColor: "#ffffff",
-    backgroundColor: "#F8F8FB",
+    bottomBarColor: theme.bg,
+    backgroundColor: theme.bg,
     showBackButton: true,
     onBack,
   });
 
   const actions = [
     { icon: "/icons/operations.svg", text: "Операции" },
-    { icon: "/icons/add.svg", text: "Добавить токен" },
+    { icon: "/icons/add.svg", text: "Добавить" },
     {
       icon: "/icons/analysis.svg",
       text: "Аналитика",
@@ -45,19 +45,24 @@ const SwiftPage: React.FC<SwiftPageProps> = ({
   ];
 
   return (
-    <div className="flex flex-col gap-[15px] pb-[30px]">
+    <div
+      className="flex flex-col gap-[15px] pb-[30px]"
+      style={{ backgroundColor: theme.bg }}
+    >
       <BalanceActionBlock actions={actions} />
 
       <TokenListContainer
         header="20,03 $"
         headerRightContent={<TrendBadge value={3.5} percent={1.1} />}
+        backgroundColor={theme.container}
+        textColor={theme.text}
         items={[
           {
             icon: "/icons/btc.svg",
             title: "Bitcoin",
             subtitle: "0,00003 BTC $",
             rightContent: (
-              <span className="text-[#212121] text-[15px] font-medium font-sfpro">
+              <span className="text-[15px] font-medium font-sfpro" style={{ color: theme.text }}>
                 67,08 $
               </span>
             ),
@@ -74,7 +79,7 @@ const SwiftPage: React.FC<SwiftPageProps> = ({
             title: "Etherium",
             subtitle: "0,08 ETH $",
             rightContent: (
-              <span className="text-[15px] font-medium font-sfpro text-[#212121]">
+              <span className="text-[15px] font-medium font-sfpro" style={{ color: theme.text }}>
                 123,06 $
               </span>
             ),
@@ -91,7 +96,7 @@ const SwiftPage: React.FC<SwiftPageProps> = ({
             title: "Solana",
             subtitle: "0.12 SOL",
             rightContent: (
-              <span className="text-[15px] font-medium font-sfpro text-[#212121]">
+              <span className="text-[15px] font-medium font-sfpro" style={{ color: theme.text }}>
                 14,09 $
               </span>
             ),
@@ -110,6 +115,7 @@ const SwiftPage: React.FC<SwiftPageProps> = ({
 };
 
 export default SwiftPage;
+
 
 
 

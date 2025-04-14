@@ -14,17 +14,29 @@ interface TokenListContainerProps {
   header: string;
   headerRightContent?: React.ReactNode;
   items: TokenListItem[];
+  backgroundColor?: string;
+  textColor?: string;
 }
 
 const TokenListContainer: React.FC<TokenListContainerProps> = ({
   header,
   headerRightContent,
   items,
+  backgroundColor = "#FFFFFF",
+  textColor = "#212121",
 }) => {
   return (
-    <div className="tw-container rounded-[20px] px-[15px] py-[15px] mx-[15px] flex flex-col gap-[10px]">
+    <div
+      className="tw-container rounded-[20px] px-[15px] py-[15px] mx-[15px] flex flex-col gap-[10px]"
+      style={{ backgroundColor }}
+    >
       <div className="flex justify-between items-center mb-[0px]">
-        <span className="text-[16px] font-sfpro font-medium text-[#212121]">{header}</span>
+        <span
+          className="text-[16px] font-sfpro font-medium"
+          style={{ color: textColor }}
+        >
+          {header}
+        </span>
         {headerRightContent}
       </div>
 
@@ -51,5 +63,6 @@ const TokenListContainer: React.FC<TokenListContainerProps> = ({
 };
 
 export default TokenListContainer;
+
 
 

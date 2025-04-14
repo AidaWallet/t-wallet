@@ -3,9 +3,11 @@ import AnimatedTextBlock from "../components/AnimatedTextBlock";
 import TokenListContainer from "./TokenListContainer";
 import RewardButton from "../components/RewardButton";
 import { useBonus } from "../contexts/BonusContext";
+import { useTheme } from "../contexts/ThemeContext"; // добавили
 
 const BonusBalanceBlock = () => {
   const { bonusPoints } = useBonus();
+  const { theme } = useTheme(); // используем тему
 
   return (
     <div
@@ -22,6 +24,8 @@ const BonusBalanceBlock = () => {
       <div className="mt-[15px] mx-[-15px]">
         <TokenListContainer
           header="Постоянные задачи"
+          backgroundColor={theme.container}
+          textColor={theme.text}
           items={[
             {
               icon: "/icons/entry.svg",
@@ -30,7 +34,7 @@ const BonusBalanceBlock = () => {
               rightContent: (
                 <RewardButton
                   initialState="ready"
-                  rewardAmount={10} // 👈 задаём награду
+                  rewardAmount={10}
                   onClaim={() => console.log("Бонус за вход зачислен")}
                 />
               ),
@@ -47,16 +51,16 @@ const BonusBalanceBlock = () => {
               ),
             },
             {
-                icon: "/icons/pass.svg",
-                title: "2X награда",
-                subtitle: "Подписка",
-                rightContent: (
-                  <RewardButton
+              icon: "/icons/pass.svg",
+              title: "2X награда",
+              subtitle: "Подписка",
+              rightContent: (
+                <RewardButton
                   initialState="get"
                   onGet={() => console.log("Открыть покупку подписки на 200 Stars")}
                 />
-                ),
-              },
+              ),
+            },
           ]}
         />
       </div>

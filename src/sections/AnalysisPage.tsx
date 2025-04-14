@@ -3,12 +3,15 @@ import DoughnutChart from "../components/DoughnutChart";
 import TokenListContainer from "../containers/TokenListContainer";
 import BannerBlock from "../components/BannerBlock";
 import { useMiniAppUI } from "../hooks/useMiniAppUI";
+import { useTheme } from "../contexts/ThemeContext"; // добавили
 
 const AnalysisPage: React.FC<{ onBack?: () => void }> = ({ onBack }) => {
+  const { theme } = useTheme();
+
   useMiniAppUI({
-    headerColor: "#F8F8FB",
-    backgroundColor: "#F8F8FB",
-    bottomBarColor: "#ffffff",
+    headerColor: theme.bg,
+    backgroundColor: theme.bg,
+    bottomBarColor: theme.bg,
     showBackButton: true,
     onBack,
   });
@@ -17,7 +20,7 @@ const AnalysisPage: React.FC<{ onBack?: () => void }> = ({ onBack }) => {
   const nftValue = 300;
 
   return (
-    <div className="flex flex-col gap-[15px] py-[20px]">
+    <div className="flex flex-col gap-[15px] py-[20px]" style={{ backgroundColor: theme.bg }}>
       <DoughnutChart tokensValue={tokensValue} nftValue={nftValue} />
 
       <BannerBlock
@@ -25,18 +28,22 @@ const AnalysisPage: React.FC<{ onBack?: () => void }> = ({ onBack }) => {
         subtitle="Запустить"
         image="/images/chart.png"
         backgroundColor="#BEE9D6"
-        textColor="#000000"
+        textColor={theme.text}
       />
 
       <TokenListContainer
         header="Распределение активов"
+        backgroundColor={theme.container}
+        textColor={theme.text}
         items={[
           {
             icon: "/icons/sir.svg",
             title: "Токены",
             subtitle: "",
             rightContent: (
-              <span className="font-sfpro text-[15px] text-[#212121]">300 $</span>
+              <span className="font-sfpro text-[15px]" style={{ color: theme.text }}>
+                300 $
+              </span>
             ),
           },
           {
@@ -44,7 +51,9 @@ const AnalysisPage: React.FC<{ onBack?: () => void }> = ({ onBack }) => {
             title: "NFT",
             subtitle: "",
             rightContent: (
-              <span className="font-sfpro text-[15px] text-[#212121]">900 $</span>
+              <span className="font-sfpro text-[15px]" style={{ color: theme.text }}>
+                900 $
+              </span>
             ),
           },
         ]}
@@ -54,4 +63,5 @@ const AnalysisPage: React.FC<{ onBack?: () => void }> = ({ onBack }) => {
 };
 
 export default AnalysisPage;
+
 

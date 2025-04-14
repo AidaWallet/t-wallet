@@ -6,7 +6,7 @@ interface DividerProps {
 }
 
 const Divider: React.FC<DividerProps> = ({
-  color = "#EFEFF4",
+  color = "rgba(0, 0, 0, 0.08)", // чёрный с прозрачностью 8%
   thickness = "1px",
 }) => {
   return (
@@ -21,4 +21,7 @@ const Divider: React.FC<DividerProps> = ({
 };
 
 export default Divider;
+
+
+
 

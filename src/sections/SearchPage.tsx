@@ -4,14 +4,16 @@ import TokenListContainer from "../containers/TokenListContainer";
 import { useMiniAppUI } from "../hooks/useMiniAppUI";
 import { useNavigation } from "../hooks/useNavigation";
 import { PAGES } from "../pages";
+import { useTheme } from "../contexts/ThemeContext";
 
 const SearchPage: React.FC = () => {
   const { goTo } = useNavigation();
+  const { theme } = useTheme();
 
   useMiniAppUI({
-    headerColor: "#212121",
-    backgroundColor: "#F8F8FB",
-    bottomBarColor: "#ffffff",
+    headerColor: theme.bg,
+    backgroundColor: theme.bg,
+    bottomBarColor: theme.bg,
     showBackButton: true,
     onBack: () => goTo(PAGES.HOME),
   });
@@ -19,7 +21,11 @@ const SearchPage: React.FC = () => {
   const buyButton = (
     <button
       onClick={() => console.log("Купить")}
-      className="bg-[#50A8EB] text-white text-[14px] font-sfpro px-[12px] py-[6px] rounded-[7px] active:scale-95 transition"
+      className="text-[14px] font-sfpro px-[12px] py-[6px] rounded-[7px] active:scale-95 transition"
+      style={{
+        backgroundColor: theme.accent,
+        color: "#fff",
+      }}
     >
       Купить
     </button>
@@ -28,22 +34,27 @@ const SearchPage: React.FC = () => {
   const formatSubtitle = (price: string, changePercent: number) => {
     const isPositive = changePercent >= 0;
     const percentText = `${isPositive ? "+" : ""}${changePercent.toFixed(2)}%`;
-    const percentColor = isPositive ? "#27BE4F" : "#FE6265";
+    const percentColor = isPositive ? "#27BE4F" : "#FE6265"; // можно сделать dynamic
 
     return (
       <>
-        {price} <span style={{ color: percentColor }}>{percentText}</span>
+        {price}{" "}
+        <span style={{ color: percentColor }}>
+          {percentText}
+        </span>
       </>
     );
   };
 
   return (
-    <div className="flex flex-col gap-[15px] pb-[20px]">
+    <div className="flex flex-col gap-[15px] pb-[20px]" style={{ backgroundColor: theme.bg }}>
       <CardCarouselContainer />
 
       <div className="-mt-[130px]">
         <TokenListContainer
           header="Рынок"
+          backgroundColor={theme.container}
+          textColor={theme.text}
           items={[
             {
               icon: "/icons/btc.svg",
@@ -77,6 +88,7 @@ const SearchPage: React.FC = () => {
 };
 
 export default SearchPage;
+
 
 
 

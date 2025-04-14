@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState } from "react"; 
 import DoubleTextBlock from "../components/DoubleTextBlock";
 import TripleActionButtons from "../components/TripleActionButtons";
 import TrendBadge from "../components/TrendBadge";
+import { useTheme } from "../contexts/ThemeContext"; // добавлено
 
 interface ActionItem {
   icon: string;
@@ -17,6 +18,7 @@ interface BalanceActionBlockProps {
 
 const BalanceActionBlock: React.FC<BalanceActionBlockProps> = ({ actions }) => {
   const [isAllTime, setIsAllTime] = useState(true);
+  const { theme } = useTheme(); // используем глобальную тему
 
   const handleToggle = () => {
     setIsAllTime(prev => !prev);
@@ -39,7 +41,10 @@ const BalanceActionBlock: React.FC<BalanceActionBlockProps> = ({ actions }) => {
         onToggle={handleToggle}
       />
 
-      <div className="tw-container px-[30px] py-[15px] mt-[15px]">
+      <div
+        className="tw-container px-[30px] py-[15px] mt-[15px]"
+        style={{ backgroundColor: theme.container }}
+      >
         <TripleActionButtons actions={actions} />
       </div>
     </div>

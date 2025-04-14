@@ -1,5 +1,6 @@
 import React from "react";
 import Leader from "../components/Leader";
+import { useTheme } from "../contexts/ThemeContext";
 
 const mockTop3 = [
   { icon: "", title: "", subtitle: "50 USD" },
@@ -15,8 +16,13 @@ const mockTop4 = [
 ];
 
 const LeaderboardContainer: React.FC = () => {
+  const { theme } = useTheme();
+
   return (
-    <div className="tw-container rounded-[20px] px-[15px] py-[15px] mx-[15px] flex flex-col gap-[20px]">
+    <div
+      className="tw-container rounded-[20px] px-[15px] py-[15px] mx-[15px] flex flex-col gap-[20px]"
+      style={{ backgroundColor: theme.container }}
+    >
       {/* Топ-3 */}
       <div className="flex justify-around">
         {mockTop3.map((leader, index) => (
@@ -44,11 +50,18 @@ const LeaderboardContainer: React.FC = () => {
       </div>
 
       {/* Фрейм с текстом */}
-      <div className="bg-[#E8E9BE] text-[#212121] text-[14px] font-sfpro text-center px-[15px] py-[10px] rounded-[12px]">
-      Начисление наград через: 28д: 10ч: 17м
+      <div
+        className="text-[14px] font-sfpro text-center px-[15px] py-[10px] rounded-[12px]"
+        style={{
+          backgroundColor: "rgba(255, 255, 255, 0.2)",
+          color: theme.text,
+        }}
+      >
+        Начисление наград через: 28д: 10ч: 17м
       </div>
     </div>
   );
 };
 
 export default LeaderboardContainer;
+

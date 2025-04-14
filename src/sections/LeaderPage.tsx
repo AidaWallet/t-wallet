@@ -2,16 +2,19 @@ import React from "react";
 import LeaderboardContainer from "../containers/LeaderboardContainer";
 import TokenListContainer from "../containers/TokenListContainer";
 import { useMiniAppUI } from "../hooks/useMiniAppUI";
+import { useTheme } from "../contexts/ThemeContext";
 
 interface LeaderPageProps {
   onBack?: () => void;
 }
 
 const LeaderPage: React.FC<LeaderPageProps> = ({ onBack }) => {
+  const { theme } = useTheme();
+
   useMiniAppUI({
-    headerColor: "#F8F8FB",
-    bottomBarColor: "#ffffff",
-    backgroundColor: "#F8F8FB",
+    headerColor: theme.bg,
+    bottomBarColor: theme.bg,
+    backgroundColor: theme.bg,
     showBackButton: true,
     onBack,
   });
@@ -24,11 +27,13 @@ const LeaderPage: React.FC<LeaderPageProps> = ({ onBack }) => {
   };
 
   return (
-    <div className="flex flex-col gap-[15px] py-[20px]">
+    <div className="flex flex-col gap-[15px] py-[20px]" style={{ backgroundColor: theme.bg }}>
       <LeaderboardContainer />
 
       <TokenListContainer
         header="Вы"
+        backgroundColor={theme.container}
+        textColor={theme.text}
         items={[
           {
             icon: "",
@@ -37,7 +42,11 @@ const LeaderPage: React.FC<LeaderPageProps> = ({ onBack }) => {
             rightContent: (
               <button
                 onClick={() => console.log("Подняться")}
-                className="bg-[#50A8EB] text-white text-[14px] font-sfpro px-[12px] py-[6px] rounded-[7px] active:scale-95 transition"
+                className="text-[14px] font-sfpro px-[12px] py-[6px] rounded-[7px] active:scale-95 transition"
+                style={{
+                  backgroundColor: theme.accent,
+                  color: "#fff",
+                }}
               >
                 Подняться
               </button>
@@ -48,6 +57,8 @@ const LeaderPage: React.FC<LeaderPageProps> = ({ onBack }) => {
 
       <TokenListContainer
         header="Топ-10"
+        backgroundColor={theme.container}
+        textColor={theme.text}
         items={Array.from({ length: 10 }).map((_, i) => {
           const place = i + 1;
           const prize = getPrize(place);
@@ -59,10 +70,16 @@ const LeaderPage: React.FC<LeaderPageProps> = ({ onBack }) => {
             subtitle: `${place} место`,
             rightContent: (
               <div className="flex flex-col items-end">
-                <span className="text-[16px] font-sfpro font-medium text-[#212121]">
+                <span
+                  className="text-[16px] font-sfpro font-medium"
+                  style={{ color: theme.text }}
+                >
                   {prize}
                 </span>
-                <span className="text-[15px] font-sfpro text-[#6D6D6D]">
+                <span
+                  className="text-[15px] font-sfpro"
+                  style={{ color: theme.hint }}
+                >
                   {np} NP
                 </span>
               </div>
@@ -75,6 +92,7 @@ const LeaderPage: React.FC<LeaderPageProps> = ({ onBack }) => {
 };
 
 export default LeaderPage;
+
 
 
 

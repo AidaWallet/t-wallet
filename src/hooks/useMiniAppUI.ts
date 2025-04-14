@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 interface MiniAppUIOptions {
   headerColor?: string;
@@ -9,10 +9,13 @@ interface MiniAppUIOptions {
 }
 
 export const useMiniAppUI = (options: MiniAppUIOptions) => {
+  const [themeParams, setThemeParams] = useState<Record<string, string>>({});
+
   useEffect(() => {
     const tg = window.Telegram?.WebApp;
     if (!tg) return;
 
+    // Настройка интерфейса
     if (options.headerColor) {
       tg.setHeaderColor?.(options.headerColor);
     }
@@ -36,8 +39,19 @@ export const useMiniAppUI = (options: MiniAppUIOptions) => {
     if (!options.showBackButton && tg.BackButton) {
       tg.BackButton.hide();
     }
+
+    // Получение параметров темы
+    const theme = (tg as any)?.themeParams;
+    if (theme) {
+      setThemeParams(theme);
+    }
+
   }, [options]);
+
+  return themeParams;
 };
+
+
 
 
 

@@ -4,9 +4,12 @@ import App from './App';
 import "./index.css";
 import 'swiper/css';
 
+import { ThemeProvider } from './contexts/ThemeContext'; // подключаем
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+    <ThemeProvider>
+      <App />
+    </ThemeProvider>
+  </React.StrictMode>
 );

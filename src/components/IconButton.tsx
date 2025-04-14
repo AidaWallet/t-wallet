@@ -1,4 +1,5 @@
 import React from "react";
+import { useTheme } from "../contexts/ThemeContext";
 
 interface IconButtonProps {
   icon: string;
@@ -13,8 +14,16 @@ const IconButton: React.FC<IconButtonProps> = ({
   text,
   onClick,
   withFrame = false,
-  frameColor = "#F0F0F0",
+  frameColor,
 }) => {
+  const { theme } = useTheme();
+
+  const resolvedFrameColor = withFrame
+    ? frameColor || theme.container
+    : "transparent";
+
+  const resolvedTextColor = withFrame ? theme.text : theme.accent;
+
   return (
     <button
       onClick={onClick}
@@ -23,13 +32,18 @@ const IconButton: React.FC<IconButtonProps> = ({
       <div
         className={withFrame ? "px-[30px] py-[10px] rounded-[10px]" : ""}
         style={{
-          backgroundColor: withFrame ? frameColor : "transparent",
+          backgroundColor: resolvedFrameColor,
         }}
       >
         <img src={icon} alt={text} className="w-[35px] h-[25px]" />
       </div>
 
-      <span className="text-[13px] font-medium font-sfpro mt-[5px] text-[#212121]">
+      <span
+        className={`mt-[5px] font-sfpro text-center leading-[15px] max-w-[70px] whitespace-normal break-normal ${
+          withFrame ? "text-[12px] font-normal" : "text-[13px] font-medium"
+        }`}
+        style={{ color: resolvedTextColor }}
+      >
         {text}
       </span>
     </button>
@@ -37,4 +51,9 @@ const IconButton: React.FC<IconButtonProps> = ({
 };
 
 export default IconButton;
+
+
+
+
+
 

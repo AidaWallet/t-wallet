@@ -25,9 +25,8 @@ const DoughnutChart: React.FC<DoughnutChartProps> = ({ tokensValue, nftValue }) 
       {
         data: [tokensValue, nftValue],
         backgroundColor: ["#50A8EB", "#A076F9"],
-        borderColor: "#F8F8FB",
-        borderWidth: 5,
-        hoverOffset: 0, // ❌ отключает "выпрыгивание"
+        hoverOffset: 0,
+        borderWidth: 0, // ✅ Убираем бордер
       },
     ],
   };
@@ -49,7 +48,7 @@ const DoughnutChart: React.FC<DoughnutChartProps> = ({ tokensValue, nftValue }) 
         },
       },
     },
-    hover: { mode: null }, // ❌ отключает выделение по ховеру
+    hover: { mode: null },
     animation: {
       animateRotate: true,
       duration: 800,
@@ -64,6 +63,7 @@ const DoughnutChart: React.FC<DoughnutChartProps> = ({ tokensValue, nftValue }) 
 };
 
 export default DoughnutChart;
+
 
 
 

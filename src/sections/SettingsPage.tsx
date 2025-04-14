@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import SettingsProfileContainer from "../containers/SettingsProfileContainer";
 import TokenListContainer from "../containers/TokenListContainer";
 import { useMiniAppUI } from "../hooks/useMiniAppUI";
+import { useTheme } from "../contexts/ThemeContext";
 
 interface SettingsPageProps {
   onBack: () => void;
@@ -10,28 +11,36 @@ interface SettingsPageProps {
 const SettingsPage: React.FC<SettingsPageProps> = ({ onBack }) => {
   const [isPasscodeOn, setIsPasscodeOn] = useState(false);
   const [isBiometryOn, setIsBiometryOn] = useState(false);
+  const { isDark, toggleTheme, theme } = useTheme();
 
   useMiniAppUI({
     headerColor: "#212121",
-    bottomBarColor: "#ffffff",
-    backgroundColor: "#F8F8FB",
+    bottomBarColor: theme.bg,
+    backgroundColor: theme.bg,
     showBackButton: true,
     onBack,
   });
 
   return (
-    <div className="flex flex-col gap-[15px] pb-[20px]">
+    <div
+      className="flex flex-col gap-[15px] pb-[20px]"
+      style={{ backgroundColor: theme.bg }}
+    >
       <SettingsProfileContainer />
 
       <div className="-mt-[110px]">
         <TokenListContainer
           header="Настройки кошелька"
+          backgroundColor={theme.container}
+          textColor={theme.text}
           items={[
             {
               icon: "/icons/faq.svg",
               title: "Язык",
               rightContent: (
-                <span className="text-[15px] font-sfpro text-[#50A8EB]">Русский</span>
+                <span className="text-[15px] font-sfpro" style={{ color: theme.accent }}>
+                  Русский
+                </span>
               ),
               onClick: () => console.log("Открыть выбор языка"),
             },
@@ -39,7 +48,9 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ onBack }) => {
               icon: "/icons/faq.svg",
               title: "Валюта",
               rightContent: (
-                <span className="text-[15px] font-sfpro text-[#50A8EB]">USD</span>
+                <span className="text-[15px] font-sfpro" style={{ color: theme.accent }}>
+                  USD
+                </span>
               ),
               onClick: () => console.log("Открыть выбор валюты"),
             },
@@ -88,6 +99,22 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ onBack }) => {
               ),
               onClick: () => console.log("Открыть фразу"),
             },
+            {
+              icon: "/icons/faq.svg",
+              title: "Тёмная тема",
+              rightContent: (
+                <label className="relative inline-flex items-center cursor-pointer">
+                  <input
+                    type="checkbox"
+                    checked={isDark}
+                    onChange={toggleTheme}
+                    className="sr-only peer"
+                  />
+                  <div className="w-[42px] h-[24px] bg-gray-300 rounded-full peer peer-checked:bg-[#50A8EB] transition duration-200 shadow-none outline-none"></div>
+                  <div className="absolute left-[3px] top-[3px] w-[18px] h-[18px] bg-white rounded-full transition-transform duration-200 peer-checked:translate-x-[18px]" />
+                </label>
+              ),
+            },
           ]}
         />
       </div>
@@ -96,5 +123,7 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ onBack }) => {
 };
 
 export default SettingsPage;
+
+
 
 
