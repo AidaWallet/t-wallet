@@ -28,8 +28,9 @@ const BonusPage: React.FC<{ onBack?: () => void }> = ({ onBack }) => {
         title="Участвуйте в турнире и получите до 250 USDT"
         subtitle="Перейти"
         image="/images/cup.png"
-        backgroundColor="#E9DEBE"
-        textColor={theme.text}
+        gradientFrom="#F93838"
+        gradientTo="#A076F9"
+        textColor="#FFFFFF"
       />
 
       <TokenListContainer

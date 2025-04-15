@@ -9,6 +9,7 @@
   font-style: normal;
 }
 
+/* Компоненты */
 @layer components {
   .tw-container {
     @apply rounded-[20px] bg-white text-[#212121] shadow-container;
@@ -19,17 +20,27 @@
   }
 }
 
-html, body {
+html,
+body {
   height: 100%;
-  overflow: auto;
-  -ms-overflow-style: none;  /* IE и Edge */
-  scrollbar-width: none;     /* Firefox */
+  margin: 0;
+  padding: 0;
+  overflow: hidden;                /* ❗ полностью отключаем прокрутку у body */
+  overscroll-behavior: none;       /* ❗ отключаем пружину на body */
+  touch-action: manipulation;
 }
 
-/* Chrome, Safari и WebKit */
-body::-webkit-scrollbar {
+.scroll-container {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scroll-container::-webkit-scrollbar {
   display: none;
 }
+
+
+
 
 
 

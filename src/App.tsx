@@ -4,7 +4,6 @@ import SearchPage from "./sections/SearchPage";
 import SwiftPage from "./sections/SwiftPage";
 import TokenPage from "./sections/TokenPage";
 import BonusPage from "./sections/BonusPage";
-import AnalysisPage from "./sections/AnalysisPage";
 import TabBar from "./components/TabBar";
 import { BonusProvider } from "./contexts/BonusContext";
 import LeaderPage from "./sections/LeaderPage";
@@ -42,9 +41,6 @@ const App: React.FC = () => {
           token && <TokenPage token={token} onBack={() => goTo(PAGES.SWIFT)} />
         );
 
-      case PAGES.ANALYSIS:
-        return <AnalysisPage onBack={() => goTo(PAGES.SWIFT)} />;
-
       case PAGES.SEARCH:
         return <SearchPage onBack={() => goTo(PAGES.HOME)} />;
 
@@ -70,13 +66,16 @@ const App: React.FC = () => {
   ].includes(page);
 
   return (
-    <div className="min-h-screen pb-[65px]">
+    <div
+  id="scroll-container"
+  className="h-screen overflow-y-auto overscroll-none pb-[65px] scroll-container"
+    >
       <BonusProvider>
         {renderPage()}
         {showTabBar && <TabBar activeTab={page} onSelect={goTo} />}
       </BonusProvider>
     </div>
-  );
+  );  
 };
 
 export default App;

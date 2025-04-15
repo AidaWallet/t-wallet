@@ -62,8 +62,9 @@ const TokenPage: React.FC<TokenPageProps> = ({ token, onBack }) => {
         title="Анализ токена на основе искусственного интеллекта"
         subtitle="Запустить"
         image="/images/chart.png"
-        backgroundColor="#BEE9D6"
-        textColor="#000000"
+        gradientFrom="#50A8EB"
+        gradientTo="#A076F9"
+        textColor="#FFFFFF"
       />
 
       <TokenListContainer

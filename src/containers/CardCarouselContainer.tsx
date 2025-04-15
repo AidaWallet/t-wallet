@@ -24,7 +24,7 @@ const data = [
     buttonText: "Перейти",
   },
   {
-    image: "/images/usd.png",
+    image: "/images/wallet.png",
     title: "Кошелек дарит до 250$ за приглашенных друзей",
     subtitle: "",
     buttonText: "Перейти",

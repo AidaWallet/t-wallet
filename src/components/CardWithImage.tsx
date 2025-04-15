@@ -20,7 +20,7 @@ const CardWithImage: React.FC<CardWithImageProps> = ({
       <img
         src={image}
         alt={title}
-        className="w-[180px] h-[150px] object-contain mb-[10px]"
+        className="w-[150px] h-[150px] object-contain mb-[10px]"
       />
       <h3 className="text-[20px] font-sfpro font-medium text-[#FFFFFF] mb-[5px]">
         {title}

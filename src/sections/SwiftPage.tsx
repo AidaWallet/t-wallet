@@ -37,11 +37,6 @@ const SwiftPage: React.FC<SwiftPageProps> = ({
   const actions = [
     { icon: "/icons/operations.svg", text: "Операции" },
     { icon: "/icons/add.svg", text: "Добавить" },
-    {
-      icon: "/icons/analysis.svg",
-      text: "Аналитика",
-      onClick: onSelectAnalysis,
-    },
   ];
 
   return (

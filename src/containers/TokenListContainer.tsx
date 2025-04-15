@@ -30,15 +30,17 @@ const TokenListContainer: React.FC<TokenListContainerProps> = ({
       className="tw-container rounded-[20px] px-[15px] py-[15px] mx-[15px] flex flex-col gap-[10px]"
       style={{ backgroundColor }}
     >
-      <div className="flex justify-between items-center mb-[0px]">
-        <span
-          className="text-[16px] font-sfpro font-medium"
-          style={{ color: textColor }}
-        >
-          {header}
-        </span>
-        {headerRightContent}
-      </div>
+      {header && (
+  <div className="flex justify-between items-center mb-[0px]">
+    <span
+      className="text-[16px] font-sfpro font-medium"
+      style={{ color: textColor }}
+    >
+      {header}
+    </span>
+    {headerRightContent}
+  </div>
+)}
 
       <div className="flex flex-col">
         {items.map((item, index) => (

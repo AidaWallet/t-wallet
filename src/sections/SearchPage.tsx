@@ -5,19 +5,23 @@ import { useMiniAppUI } from "../hooks/useMiniAppUI";
 import { useNavigation } from "../hooks/useNavigation";
 import { PAGES } from "../pages";
 import { useTheme } from "../contexts/ThemeContext";
+import { useScrollToTop } from "../hooks/useScrollToTop";
 
 const SearchPage: React.FC = () => {
   const { goTo } = useNavigation();
   const { theme } = useTheme();
+  
 
   useMiniAppUI({
-    headerColor: theme.bg,
+    headerColor: "#212121",
     backgroundColor: theme.bg,
     bottomBarColor: theme.bg,
     showBackButton: true,
     onBack: () => goTo(PAGES.HOME),
   });
 
+  useScrollToTop();
+  
   const buyButton = (
     <button
       onClick={() => console.log("Купить")}
