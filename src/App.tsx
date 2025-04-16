@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import MainPage from "./sections/MainPage";
 import SearchPage from "./sections/SearchPage";
 import SwiftPage from "./sections/SwiftPage";
@@ -10,6 +10,7 @@ import LeaderPage from "./sections/LeaderPage";
 import SettingsPage from "./sections/SettingsPage";
 import { PAGES } from "./pages";
 import { useNavigation } from "./hooks/useNavigation";
+import { UserProvider } from "./contexts/UserContext"; // 👈 добавили
 
 const App: React.FC = () => {
   const { page, token, goTo, setToken } = useNavigation();
@@ -67,18 +68,22 @@ const App: React.FC = () => {
 
   return (
     <div
-  id="scroll-container"
-  className="h-screen overflow-y-auto overscroll-none pb-[65px] scroll-container"
+      id="scroll-container"
+      className="h-screen overflow-y-auto overscroll-none pb-[65px] scroll-container"
     >
-      <BonusProvider>
-        {renderPage()}
-        {showTabBar && <TabBar activeTab={page} onSelect={goTo} />}
-      </BonusProvider>
+      <UserProvider> {/* 👈 Оборачиваем в UserProvider */}
+        <BonusProvider>
+          {renderPage()}
+          {showTabBar && <TabBar activeTab={page} onSelect={goTo} />}
+        </BonusProvider>
+      </UserProvider>
     </div>
-  );  
+  );
 };
 
 export default App;
+
+
 
 
 

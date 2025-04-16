@@ -3,11 +3,11 @@ import AnimatedTextBlock from "../components/AnimatedTextBlock";
 import TokenListContainer from "./TokenListContainer";
 import RewardButton from "../components/RewardButton";
 import { useBonus } from "../contexts/BonusContext";
-import { useTheme } from "../contexts/ThemeContext"; // добавили
+import { useTheme } from "../contexts/ThemeContext";
 
 const BonusBalanceBlock = () => {
-  const { bonusPoints } = useBonus();
-  const { theme } = useTheme(); // используем тему
+  const { bonus } = useBonus();
+  const { theme } = useTheme();
 
   return (
     <div
@@ -18,7 +18,7 @@ const BonusBalanceBlock = () => {
     >
       <AnimatedTextBlock
         topText="Ваши бонусы"
-        value={bonusPoints}
+        value={bonus}
       />
 
       <div className="mt-[15px] mx-[-15px]">

@@ -1,0 +1,16 @@
+{
+  "users": {
+    "762268838": {
+      "bonus": 50,
+      "first_name": "Rodion",
+      "username": "RodionVikol",
+      "photo_url": "https://t.me/i/userpic/320/e9b4I533QSUoFUERs1ZhQ8nxprQW8uyZIuvc9Bu6lNg.svg"
+    },
+    "6246766375": {
+      "bonus": 10,
+      "first_name": "Адалин",
+      "username": "tarroca",
+      "photo_url": "https://t.me/i/userpic/320/pn4lv0dVC8uTMQ1_Si-6dFm5NdFSoiRn1Fo7K5SstcegpKJdELS_mAVUk3kKDyCQ.svg"
+    }
+  }
+}

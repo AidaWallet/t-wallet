@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import confetti from "canvas-confetti";
 import { useBonus } from "../contexts/BonusContext";
+import { useUser } from "../contexts/UserContext";
 
 interface RewardButtonProps {
   initialState: "start" | "ready" | "claimed" | "copy" | "get";
@@ -20,7 +21,8 @@ const RewardButton: React.FC<RewardButtonProps> = ({
   onGet,
 }) => {
   const [state, setState] = useState(initialState);
-  const { addBonus } = useBonus();
+  const { setBonus } = useBonus();
+  const { user } = useUser();
 
   const isClaimed = state === "claimed";
 
@@ -33,7 +35,7 @@ const RewardButton: React.FC<RewardButtonProps> = ({
     });
   };
 
-  const handleClick = () => {
+  const handleClick = async () => {
     if (isClaimed) return;
 
     if (state === "start" && link) {
@@ -43,10 +45,25 @@ const RewardButton: React.FC<RewardButtonProps> = ({
     }
 
     if (state === "ready") {
-      launchConfetti();
-      addBonus(rewardAmount || 0);
-      onClaim?.();
-      setState("claimed");
+      try {
+        const res = await fetch("http://localhost:3001/bonus/collect", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            userId: user?.id,
+            amount: rewardAmount || 0,
+          }),
+        });
+
+        const data = await res.json();
+
+        setBonus(data.bonus); // ✅ только обновляем бонус с сервера
+        launchConfetti();
+        onClaim?.();
+        setState("claimed");
+      } catch (err) {
+        console.error("❌ Ошибка при начислении бонуса:", err);
+      }
       return;
     }
 
@@ -93,5 +110,7 @@ const RewardButton: React.FC<RewardButtonProps> = ({
 };
 
 export default RewardButton;
+
+
 
 

@@ -1,30 +1,37 @@
-import React, { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 
-interface BonusContextType {
-  bonusPoints: number;
-  addBonus: (amount: number) => void;
-}
+const BonusContext = createContext(null);
 
-const BonusContext = createContext<BonusContextType | undefined>(undefined);
+export const BonusProvider = ({ children }) => {
+  const [bonus, setBonus] = useState(0);
 
-export const BonusProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [bonusPoints, setBonusPoints] = useState(0);
+  useEffect(() => {
+    const initData = (window.Telegram?.WebApp as any)?.initData;
+    if (!initData) return;
 
-  const addBonus = (amount: number) => {
-    setBonusPoints((prev) => prev + amount);
-  };
+    fetch("http://localhost:3001/auth/telegram", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ initData }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setBonus(data.bonus);
+      })
+      .catch((err) => {
+        console.error("Ошибка загрузки бонуса:", err);
+      });
+  }, []);
+
+  const addBonus = (amount) => setBonus((prev) => prev + amount);
 
   return (
-    <BonusContext.Provider value={{ bonusPoints, addBonus }}>
+    <BonusContext.Provider value={{ bonus, setBonus, addBonus }}>
       {children}
     </BonusContext.Provider>
   );
 };
 
-export const useBonus = (): BonusContextType => {
-  const context = useContext(BonusContext);
-  if (!context) {
-    throw new Error("useBonus must be used within a BonusProvider");
-  }
-  return context;
-};
+export const useBonus = () => useContext(BonusContext);
+
+

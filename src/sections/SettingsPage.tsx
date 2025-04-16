@@ -4,6 +4,7 @@ import TokenListContainer from "../containers/TokenListContainer";
 import { useMiniAppUI } from "../hooks/useMiniAppUI";
 import { useTheme } from "../contexts/ThemeContext";
 import { Sun, Moon } from "lucide-react";
+import { useUser } from "../contexts/UserContext";
 
 interface SettingsPageProps {
   onBack: () => void;
@@ -13,6 +14,7 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ onBack }) => {
   const [isPasscodeOn, setIsPasscodeOn] = useState(false);
   const [isBiometryOn, setIsBiometryOn] = useState(false);
   const { isDark, toggleTheme, theme } = useTheme();
+  const { user } = useUser();
 
   useMiniAppUI({
     headerColor: theme.bg,
@@ -40,14 +42,16 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ onBack }) => {
 
   return (
     <div className="flex flex-col gap-[15px] pb-[20px]" style={{ backgroundColor: theme.bg }}>
-      <div className="tw-container rounded-[20px] px-[15px] py-[15px] mx-[15px] mt-[15px]" style={{ backgroundColor: theme.container }}>
-        <InfoRow
-          icon=""
-          title="Родион"
-          subtitle="@rodion"
-          rightContent={themeSwitchContent}
-        />
-      </div>
+      {user && (
+        <div className="tw-container rounded-[20px] px-[15px] py-[15px] mx-[15px] mt-[15px]" style={{ backgroundColor: theme.container }}>
+          <InfoRow
+            icon={user?.photo_url || ""}
+            title={user?.first_name || "Имя не указано"}
+            subtitle={user?.username ? `@${user.username}` : "Без username"}
+            rightContent={themeSwitchContent}
+          />
+        </div>
+      )}
 
       <div className="-mt-[0px]">
         <TokenListContainer
@@ -128,6 +132,9 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ onBack }) => {
 };
 
 export default SettingsPage;
+
+
+
 
 
 

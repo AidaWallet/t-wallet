@@ -5,7 +5,8 @@ import TrendBadge from "../components/TrendBadge";
 import TripleActionButtons from "../components/TripleActionButtons";
 import BannerBlock from "../components/BannerBlock";
 import { useMiniAppUI } from "../hooks/useMiniAppUI";
-import { useTheme } from "../contexts/ThemeContext"; // заменили импорт темы
+import { useTheme } from "../contexts/ThemeContext";
+import { useBonus } from "../contexts/BonusContext";
 
 interface MainPageProps {
   onSelectSwiftPage?: () => void;
@@ -13,7 +14,8 @@ interface MainPageProps {
 }
 
 const MainPage: React.FC<MainPageProps> = ({ onSelectSwiftPage, onSelectBonusPage }) => {
-  const { theme } = useTheme(); // получаем тему из контекста
+  const { theme } = useTheme();
+  const { bonus } = useBonus();
 
   useMiniAppUI({
     headerColor: "#212121",
@@ -66,7 +68,8 @@ const MainPage: React.FC<MainPageProps> = ({ onSelectSwiftPage, onSelectBonusPag
       />
 
       <TokenListContainer
-        header="0,00 NP"
+        header={`${(bonus ?? 0).toFixed(2)} NP`}
+        // 👈 динамический вывод бонусов
         backgroundColor={theme.container}
         textColor={theme.text}
         items={[
